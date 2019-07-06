@@ -90,7 +90,20 @@ namespace SatisPlanner
 
         public static readonly List<SubAssembly> SubAssemblies = new List<SubAssembly>
         {
-
+            new SubAssembly()
+            {
+                In = { new MaterialAmount()
+                {
+                    Material = IronIngot,
+                    Amount = 1,
+                }},
+                Out = new MaterialAmount()
+                {
+                    Material = Screw,
+                    Amount = 6,
+                },
+                CraftingTime = 4,
+            },
             new SubAssembly()
             {
                 In=
@@ -142,7 +155,32 @@ namespace SatisPlanner
                     Amount = 1
                 },
                 CraftingTime = 3
+            },
+            new SubAssembly()
+            {
+                In = { new MaterialAmount()
+                {
+                    Material = SteelIngot,
+                    Amount = 75,
+                }, new MaterialAmount()
+                {
+                    Material = IronIngot,
+                    Amount = 225,
+                },new MaterialAmount()
+                {
+                    Material = Concrete,
+                    Amount = 25,
+                }},
+                Out = new MaterialAmount()
+                {
+                    Material = HeavyModularFrame,
+                    Amount = 1
+                },
+                CraftingTime = 15
             }
+            // circuit board : Copper Ingot, Plastic -> Circuit board
+            // Cable : Copper Ingot -> Cable
+            // computer :   
         };
 
         public static readonly List<Recipe> Recipes = new List<Recipe>

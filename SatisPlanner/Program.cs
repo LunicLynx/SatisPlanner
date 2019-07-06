@@ -18,12 +18,12 @@ namespace SatisPlanner
             _miner = Data.MinerMk3;
             _overclocking = 2.5;
             _overclockBuildings = BuildingGroup.Miners;
-            _nodePurity = NodePurity.Impure;
+            _nodePurity = NodePurity.Pure;
 
             var toProduce = new MaterialRate
             {
-                Material = Data.HeavyModularFrame,
-                RatePerMinute = 4
+                Material = Data.Computer,
+                RatePerMinute = 1.875
             };
 
             GetRates(toProduce);
@@ -70,17 +70,13 @@ namespace SatisPlanner
                 if (recipe.ProductionBuilding == Data.Miner)
                 {
                     productionSpeed *= _overclocking;
-                    switch (_nodePurity)
+
+                    productionSpeed *= _nodePurity switch
                     {
-                        case NodePurity.Impure:
-                            productionSpeed *= 0.5;
-                            break;
-                        case NodePurity.Pure:
-                            productionSpeed *= 2;
-                            break;
-                        default:
-                            break;
-                    }
+                        NodePurity.Impure => .5,
+                        NodePurity.Pure => 2,
+                        _ => 1
+                    };
                 }
             }
 
