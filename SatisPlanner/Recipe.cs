@@ -4,7 +4,6 @@ namespace SatisPlanner
 {
     class Recipe
     {
-        public bool SubAssembly { get; set; }
         public Building ProductionBuilding { get; set; }
 
         public List<MaterialAmount> In { get; } = new List<MaterialAmount>();

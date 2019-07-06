@@ -67,7 +67,7 @@ namespace SatisPlanner
         public static readonly Material BlackPowder = new Material { Name = "Black Powder" };
         public static readonly Material Fuel = new Material { Name = "Fuel" };
         public static readonly Material Supercomputer = new Material { Name = "Supercomputer" };
-        public static readonly Material HighSpeedConnector = new Material { Name = "High Speed Connector" };
+        public static readonly Material HighSpeedConnector = new Material { Name = "High-Speed Connector" };
         public static readonly Material Silica = new Material { Name = "Silica" };
         public static readonly Material AluminumIngot = new Material { Name = "Aluminum Ingot", StackSize = 100 };
         public static readonly Material AlcladAluminumSheet = new Material { Name = "Alclad Aluminum Sheet", StackSize = 100 };
@@ -90,34 +90,7 @@ namespace SatisPlanner
 
         public static readonly List<SubAssembly> SubAssemblies = new List<SubAssembly>
         {
-            new SubAssembly()
-            {
-                In =
-                {
-                    new MaterialAmount()
-                    {
-                        Material = IronOre,
-                        Amount = 1
-                    }
-                },
-                Out = new MaterialAmount()
-                {
-                    Material = IronIngot,
-                    Amount = 1
-                },
-                CraftingTime = 2
-            },
-            //new SubAssembly()
-            //{
-            //    Name = "Iron Rod",
-            //    In=
-            //    {
-            //        new MaterialAmount()
-            //        {
-            //            Material = IronOre
-            //        }
-            //    }
-            //}
+
             new SubAssembly()
             {
                 In=
@@ -134,6 +107,41 @@ namespace SatisPlanner
                     Amount = 1
                 },
                 CraftingTime = 4
+            },
+            new SubAssembly()
+            {
+                In=
+                {
+                    new MaterialAmount()
+                    {
+                        Material = IronIngot,
+                        Amount = 42,
+                    }
+                },
+                Out = new MaterialAmount()
+                {
+                    Material = ModularFrame,
+                    Amount = 1
+                },
+                CraftingTime = 3
+            },
+            new SubAssembly()
+            {
+                In = { new MaterialAmount()
+                {
+                    Material = SteelIngot,
+                    Amount = 12,
+                }, new MaterialAmount()
+                {
+                    Material = Concrete,
+                    Amount = 5,
+                }},
+                Out = new MaterialAmount()
+                {
+                    Material = EncasedIndustrialBeam,
+                    Amount = 1
+                },
+                CraftingTime = 3
             }
         };
 
@@ -750,11 +758,13 @@ namespace SatisPlanner
             new Recipe()
             {
                 ProductionBuilding = Assembler,
-                In = { new MaterialAmount()
+                In =
                 {
-                    Material = ReinforcedIronPlate,
-                    Amount = 3
-                },
+                    new MaterialAmount()
+                    {
+                        Material = ReinforcedIronPlate,
+                        Amount = 3
+                    },
                     new MaterialAmount()
                     {
                         Material = IronRod,
@@ -768,6 +778,246 @@ namespace SatisPlanner
                 },
                 CraftingTime = 15,
                 Clicks = 4
+            },
+            new Recipe()
+            {
+                ProductionBuilding = Manufacturer,
+                In =
+                {
+                    new MaterialAmount()
+                    {
+                        Material = ModularFrame,
+                        Amount = 5,
+                    },
+                    new MaterialAmount()
+                    {
+                        Material = SteelPipe,
+                        Amount = 15
+                    },
+                    new MaterialAmount()
+                    {
+                        Material = EncasedIndustrialBeam,
+                        Amount = 5
+                    },
+                    new MaterialAmount()
+                    {
+                        Material = Screw,
+                        Amount = 90
+                    }
+                },
+                Out = new MaterialAmount()
+                {
+                    Material = HeavyModularFrame,
+                    Amount = 1
+                },
+                CraftingTime = 30,
+                Clicks = 8,
+            },
+            new Recipe()
+            {
+                ProductionBuilding = Assembler,
+                In =
+                {
+                    new MaterialAmount()
+                    {
+                        Material = SteelBeam,
+                        Amount = 4
+                    },
+                    new MaterialAmount()
+                    {
+                        Material = Concrete,
+                        Amount = 5
+                    }
+                },
+                Out = new MaterialAmount()
+                {
+                    Material = EncasedIndustrialBeam,
+                    Amount = 1
+                },
+                CraftingTime = 15,
+                Clicks = 4
+            },
+            new Recipe()
+            {
+                ProductionBuilding = Constructor,
+                In =
+                {
+                    new MaterialAmount()
+                    {
+                        Material = SteelIngot,
+                        Amount = 3
+                    }
+                },
+                Out = new MaterialAmount()
+                {
+                    Material = SteelBeam,
+                    Amount = 1
+                },
+                CraftingTime = 6,
+                Clicks = 2
+            },
+            new Recipe()
+            {
+                ProductionBuilding = Constructor,
+                In =
+                {
+                    new MaterialAmount()
+                    {
+                        Material = Limestone,
+                        Amount = 3,
+                    }
+                },
+                Out = new MaterialAmount()
+                {
+                    Material = Concrete,
+                    Amount = 1
+                },
+                CraftingTime = 4,
+                Clicks = 1
+            },
+            new Recipe()
+            {
+                ProductionBuilding = Miner,
+                Out = new MaterialAmount()
+                {
+                    Material = Limestone,
+                    Amount = 1
+                },
+                CraftingTime = 1
+            },
+            new Recipe()
+            {
+                ProductionBuilding = Manufacturer,
+                In =
+                {
+                    new MaterialAmount()
+                    {
+                        Material = Computer,
+                        Amount = 2
+                    },
+                    new MaterialAmount()
+                    {
+                        Material = AiLimiter,
+                        Amount = 2,
+                    },
+                    new MaterialAmount()
+                    {
+                        Material = HighSpeedConnector,
+                        Amount = 3
+                    },
+                    new MaterialAmount()
+                    {
+                        Material = Plastic,
+                        Amount = 21
+                    }
+                },
+                Out = new MaterialAmount()
+                {
+                    Material = Supercomputer,
+                    Amount = 1
+                },
+                CraftingTime = 32,
+                Clicks = 8
+            },
+            new Recipe()
+            {
+                ProductionBuilding = Assembler,
+                In =
+                {
+                    new MaterialAmount()
+                    {
+                        Material = CircuitBoard,
+                        Amount = 2
+                    },
+                    new MaterialAmount()
+                    {
+                        Material = Quickwire,
+                        Amount = 18
+                    }
+                },
+                Out = new MaterialAmount()
+                {
+                    Material = AiLimiter,
+                    Amount = 1
+                },
+                CraftingTime = 12,
+                Clicks = 3
+            },
+            new Recipe()
+            {
+                ProductionBuilding = Constructor,
+                In =
+                {
+                    new MaterialAmount()
+                    {
+                        Material = CateriumIngot
+                    }
+                },
+                Out = new MaterialAmount()
+                {
+                    Material = Quickwire,
+                    Amount = 4
+                },
+                CraftingTime = 4,
+                Clicks = 1
+            },
+            new Recipe()
+            {
+                ProductionBuilding = Smelter,
+                In =
+                {
+                    new MaterialAmount()
+                    {
+                        Material = CateriumOre,
+                        Amount = 3
+                    }
+                },
+                Out = new MaterialAmount()
+                {
+                    Material = CateriumIngot,
+                    Amount = 1
+                },
+                CraftingTime = 4,
+                Clicks = 4
+            },
+            new Recipe()
+            {
+                ProductionBuilding = Miner,
+                Out = new MaterialAmount()
+                {
+                    Material = CateriumOre,
+                    Amount = 1
+                },
+                CraftingTime = 1
+            },
+            new Recipe()
+            {
+                ProductionBuilding = Manufacturer,
+                In =
+                {
+                    new MaterialAmount()
+                    {
+                        Material = Quickwire,
+                        Amount = 40,
+                    },
+                    new MaterialAmount()
+                    {
+                        Material = Cable,
+                        Amount = 10
+                    },
+                    new MaterialAmount()
+                    {
+                        Material = Plastic,
+                        Amount = 6
+                    }
+                },
+                Out = new MaterialAmount()
+                {
+                    Material = HighSpeedConnector,
+                    Amount = 1
+                },
+                CraftingTime = 24,
+                Clicks = 6
             }
         };
     }

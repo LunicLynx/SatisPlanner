@@ -6,28 +6,24 @@ using System.Threading;
 
 namespace SatisPlanner
 {
-    enum BuildingGroup
-    {
-        All,
-        Miners
-    }
-
     class Program
     {
         private static Building _miner;
         private static double _overclocking;
         private static BuildingGroup _overclockBuildings;
+        private static NodePurity _nodePurity;
 
         static void Main(string[] args)
         {
-            _miner = Data.MinerMk1;
-            _overclocking = 1;
+            _miner = Data.MinerMk3;
+            _overclocking = 2.5;
             _overclockBuildings = BuildingGroup.Miners;
+            _nodePurity = NodePurity.Impure;
 
             var toProduce = new MaterialRate
             {
-                Material = Data.ModularFrame,
-                RatePerMinute = 20
+                Material = Data.HeavyModularFrame,
+                RatePerMinute = 4
             };
 
             GetRates(toProduce);
@@ -38,14 +34,15 @@ namespace SatisPlanner
             var requiredRatePerSecond = toProduce.RatePerMinute / 60;
             var ratePerSecond = requiredRatePerSecond;
 
-            // find sub assembly
-            var sa = Data.SubAssemblies.FirstOrDefault(s => s.Out.Material == toProduce.Material);
+
             List<MaterialAmount> list;
             int outAmount;
             double productionSpeed;
             double craftingTime;
             string name;
 
+            // find sub assembly
+            var sa = Data.SubAssemblies.FirstOrDefault(s => s.Out.Material == toProduce.Material);
             if (sa != null)
             {
                 craftingTime = sa.CraftingTime;
@@ -53,10 +50,11 @@ namespace SatisPlanner
                 productionSpeed = 1;
                 list = sa.In;
                 name = "SA " + sa.Out.Material.Name;
+                Console.ForegroundColor = ConsoleColor.Yellow;
             }
             else
             {
-                var recipe = Data.Recipes.FirstOrDefault(r => r.Out.Material == toProduce.Material);
+                var recipe = Data.Recipes.First(r => r.Out.Material == toProduce.Material);
 
                 craftingTime = recipe.CraftingTime;
 
@@ -70,18 +68,32 @@ namespace SatisPlanner
                 name = productionBuilding.Name;
 
                 if (recipe.ProductionBuilding == Data.Miner)
+                {
                     productionSpeed *= _overclocking;
+                    switch (_nodePurity)
+                    {
+                        case NodePurity.Impure:
+                            productionSpeed *= 0.5;
+                            break;
+                        case NodePurity.Pure:
+                            productionSpeed *= 2;
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
 
+            // maximum production
             var productionRatePerSecond = outAmount * productionSpeed / craftingTime;
 
             // how many buildings
             var buildingAmountFraction = requiredRatePerSecond / productionRatePerSecond;
             var buildingAmount = Math.Ceiling(buildingAmountFraction);
-            var usage = 100 * buildingAmountFraction / buildingAmount;
+            var usage = buildingAmountFraction / buildingAmount;
 
-            Console.WriteLine($"{indent}{toProduce.Material.Name} {toProduce.RatePerMinute}/min {buildingAmount} {name} ({usage}%)");
-
+            Console.WriteLine($"{indent}{toProduce.Material.Name} {toProduce.RatePerMinute:F}/min {buildingAmount} {name} ({usage:P0})");
+            Console.ResetColor();
             ratePerSecond /= outAmount;
 
             // calculate inputs
