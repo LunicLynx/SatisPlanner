@@ -16,14 +16,14 @@ namespace SatisPlanner
         static void Main(string[] args)
         {
             _miner = Data.MinerMk3;
-            _overclocking = 2.5;
+            _overclocking = 1;
             _overclockBuildings = BuildingGroup.Miners;
-            _nodePurity = NodePurity.Pure;
+            _nodePurity = NodePurity.Normal;
 
             var toProduce = new MaterialRate
             {
-                Material = Data.Computer,
-                RatePerMinute = 1.875
+                Material = Data.HeatSink,
+                RatePerMinute = 15
             };
 
             GetRates(toProduce);

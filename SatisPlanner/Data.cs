@@ -177,7 +177,87 @@ namespace SatisPlanner
                     Amount = 1
                 },
                 CraftingTime = 15
+            },
+            new SubAssembly()
+            {
+                In = { new MaterialAmount()
+                {
+                    Material = CopperIngot,
+                    Amount = 4
+                },
+                    new MaterialAmount()
+                    {
+                        Material = Plastic,
+                        Amount = 6
+                    }
+                },
+                Out = new MaterialAmount()
+                {
+                    Material = CircuitBoard,
+                    Amount = 1
+                },
+                CraftingTime = 4
+            },
+            new SubAssembly()
+            {
+                In = { new MaterialAmount()
+                {
+                    Material = CopperIngot,
+                    Amount = 2
+                }},
+                Out = new MaterialAmount()
+                {
+                    Material = Cable,
+                    Amount = 3
+                },
+                CraftingTime = 4
+            },
+            // Rotor
+            new SubAssembly()
+            {
+                In = { new MaterialAmount()
+                {
+                    Material = IronIngot,
+                    Amount = 20
+                }},
+                Out = new MaterialAmount()
+                {
+                    Material = Rotor,
+                    Amount = 3
+                },
+                CraftingTime = 2
+            },
+            // Stator,
+            new SubAssembly()
+            {
+                In = { new MaterialAmount()
+                {
+                    Material = SteelIngot,
+                    Amount = 9
+                },new MaterialAmount()
+                {
+                    Material = CopperIngot,
+                    Amount = 10
+                }},
+                Out = new MaterialAmount()
+                {
+                    Material = Stator,
+                    Amount = 3
+                },
+                CraftingTime = 2
             }
+            //new SubAssembly()
+            //{
+            //    In = { new MaterialAmount()
+            //    {
+            //        Material = CircuitBoard,
+            //        Amount = 20
+            //    }, new MaterialAmount()
+            //    {
+            //        Material = CateriumIngot,
+            //        Amount = 90
+            //    }}
+            //}
             // circuit board : Copper Ingot, Plastic -> Circuit board
             // Cable : Copper Ingot -> Cable
             // computer :   
